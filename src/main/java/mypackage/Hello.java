@@ -36,7 +36,7 @@ public final class Hello extends HttpServlet {
       sb.append(dateTimeStr);
       sb.append("<p>Please notice this time is updated after refreshing the page.</p>");
       sb.append("<p>This is the output of a servlet that is part of the Hello World application.</p>");
-      sb.append("<h3><a href=\"/\">Back to homepage.</a></h3></body>");
+      sb.append("<h3><a href=\"/hello\">Back to homepage.</a></h3></body>");
       sb.append("</html>");
       writer.println(sb);
    }
