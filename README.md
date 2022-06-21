@@ -87,6 +87,35 @@ VS Code 安装好上述插件后需要配置些 Java 相关的配置，比如 Ma
   <version>2.5</version>
 </dependency>
 ```
+到了 Tomcat 10 版本，上述依赖也会报错
+```
+java.lang.ClassCastException: class mypackage.Hello cannot be cast to class jakarta.servlet.Servlet (mypackage.Hello is in unnamed module of loader org.apache.catalina.loader.ParallelWebappClassLoader @4a07d605; jakarta.servlet.Servlet is in unnamed module of loader java.net.URLClassLoader @6f539caf)
+```
+这是因为 Tomcat 10 将JavaEE也换成了Jakarta EE，Jakarta EE较以前的JavaEE有一个非常非常重要的更新：包名不再是"javax.servlet.“而是改成了"jakarta.servlet." 所以依赖包要再重新配置。
+
+pom.xml 中原来的 javax.servlet 依赖段换成下面
+```
+    <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-servlet-api</artifactId>
+      <version>10.0.8</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jsp-api -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-jsp-api</artifactId>
+      <version>10.0.8</version>
+    </dependency>
+```
+Hello.java 中引用也相应换成
+```
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+```
 
 * TOMCAT SERVER 插件管理的 Tomcat 服务器不能停止。
 
@@ -152,3 +181,41 @@ SEVERE: Failed to create server shutdown socket on address [localhost] and port 
 ## 使用 Release 流水线把 Artifact 发布到 Tomcat Server
 
 Release > Agent job 中的 Agent Specification 选择 ubuntu-20.04。
+
+
+## 使用 Pipeline 流水线构建并发布到 Azure App Service
+在 Azure Pipelines 下的 Pipelines 点击 New Pipeline
+
+Where is your code? 选择 GitHub
+(doc/img/ADO_Pipeline01.png)
+
+如果是首次选择 GitHub ，按提示登录 GitHub 并授权 Azure DevOps 访问。授权仅需一次，之后会直接列出现有的源码库，选择点击这个 Java Web 的库。
+(doc/img/ADO_Pipeline02.png)
+
+Configure 步骤，点击 Maven package Java project Web App to Linux on Azure
+(doc/img/ADO_Pipeline03.png)
+
+按弹出的提示选择自己的订阅，再点击 Continue
+(doc/img/ADO_Pipeline04.png)
+
+下一页，选中 Azure 订阅中已创建好的 App Service，最后点击 Validate and configure。
+(doc/img/ADO_Pipeline05.png)
+
+耐心等待一会，Pipelines 配置好后会跳转到 yml 文件编辑界面。这里直接点击 Save and run 按钮即可。
+(doc/img/ADO_Pipeline06.png)
+
+弹出的 Save and run 弹层，因为直接 commit 到原码库，建议写上有意义的提交说明。
+
+然后会跳转到流水线运行界面
+(doc/img/ADO_Pipeline07.png)
+
+这里先执行 Build stage 的构建作业。点击 Build stage 可以前进到作业执行详情页。
+(doc/img/ADO_Pipeline08.png)
+
+构建执行完成后，Deploy stage 在首次部署到 Azure App Service 时需要确认授权。
+(doc/img/ADO_Pipeline09.png)
+
+点击 View 按钮，在弹出的 Waiting for review 弹层，点击 Permit 授权，弹层再点击 Permit 确认即可。
+(doc/img/ADO_Pipeline10.png)
+
+授权之后 Deploy stage 会继续执行，直到顺利完成。
