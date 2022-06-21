@@ -12,11 +12,11 @@ String hello = "Current time is " + dateTimeStr;
     <head>
         <title>Sample Application JSP Page</title>
     </head>
-<body bgcolor="white">        
+<body bgcolor="white">
 <body>
 <h2>Hello World!</h2>
 <p><%= hello %></p>
 <p>Please notice this time is set at the time of compilatin and not updated after refreshing the page.</p>
-<p><a href="hello">hello from Servlet</a></p>
+<p><a href="/hello/hello">hello from Servlet</a></p>
 </body>
 </html>
