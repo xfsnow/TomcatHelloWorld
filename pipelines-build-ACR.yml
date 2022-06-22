@@ -9,7 +9,7 @@ trigger:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '44fbf17e-1870-4f48-9f1a-e57e81891048'
-  imageRepository: 'helloworld'
+  imageRepository: 'tomcat-hello'
   containerRegistry: 'snowpeak.azurecr.cn'
   dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
   tag: '$(Build.BuildId)'
@@ -49,4 +49,4 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/TomcatHello.dockerfile'
         tags: |
-          $(tag)
+          $(tag) latest
