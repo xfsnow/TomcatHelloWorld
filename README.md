@@ -223,7 +223,7 @@ Configure 步骤，点击 Maven package Java project Web App to Linux on Azure
 
 # 构建成 docker 镜像
 ## 编辑 Dockerfile 文件
-这里我指定了文件名 TomcatHello.dockerfile 。
+这里我指定了文件名 [TomcatHello.dockerfile](TomcatHello.dockerfile) 。
 
 先使用默认配置构建一个
 ```
@@ -248,9 +248,11 @@ docker exec -it tomcat-hello /bin/sh
 
 发现配置文件在
 /usr/local/tomcat/conf/server.xml
+把这个配置文件拷贝出来
 docker cp 容器的id:/usr/local/tomcat/conf/server.xml ./
 
 再把这个拷贝出来的配置文件
+
 ```
 <Connector port="8080" protocol="HTTP/1.1"
                connectionTimeout="20000"
@@ -278,8 +280,22 @@ docker push snowpeak.azurecr.cn/tomcat-hello:latest
 ```
 
 ## 部署到 AKS
+已经事先在 Azure 中创建好一个 AKS 集群，并且本地 kubectl 已配置好连接。
 
+创建 2 个部署的 YAML 文件，里面的镜像源使用已经推送过镜像的 ACR 的地址，参见  [tomcat-hello-deployment.yaml#L17](tomcat-hello-deployment.yaml#L17)
+
+然后在本地执行即可部署到 AKS 集群上
+```
+kubectl apply -f tomcat-hello-deployment.yaml
+kubectl apply -f tomcat-hello-service.yaml
+```
 
 ## 在 Azure DevOps Pipelines 中创建 CI 流水线
+pipelines-build-ACR.yml
 
 ## 在 Azure DevOps Pipelines 中创建 CD 流水线
+pipelines_deployAKS.yml
+
+#TODO
+## 配置到容器的根目录运行
+## 集成 Application Insights
