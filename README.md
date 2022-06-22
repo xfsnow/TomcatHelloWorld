@@ -223,20 +223,19 @@ Configure 步骤，点击 Maven package Java project Web App to Linux on Azure
 
 # 构建成 docker 镜像
 ## 编辑 Dockerfile 文件
+这里我指定了文件名 TomcatHello.dockerfile 。
 
+先使用默认配置构建一个
+```
 docker build -f TomcatHello.dockerfile -t tomcat-hello:0.1 .
 docker tag tomcat-hello:0.1 tomcat-hello:latest
+```
+
+本地运行一下
+````
 docker run -d -p 8080:8080 --name tomcat-hello tomcat-hello
-
-az cloud set -n AzureChinaCloud
-az login
-az acr login --name snowpeak
-docker tag tomcat-hello:0.1 snowpeak.azurecr.cn/tomcat-hello:0.1
-docker push snowpeak.azurecr.cn/tomcat-hello:0.1
-docker tag tomcat-hello:0.1 snowpeak.azurecr.cn/tomcat-hello:latest
-docker push snowpeak.azurecr.cn/tomcat-hello:latest
-
-docker build -f TomcatHello.dockerfile -t tomcat-hello:0.2 -t tomcat-hello:latest .
+```
+可以正常运行
 
 ### 调整成80端口运行
 docker build -f TomcatHello.dockerfile -t tomcat-hello:0.2 .
@@ -267,7 +266,19 @@ TomcatHello.dockerfile 增加一行覆盖这个配置文件的命令，并且最
 
 ## 推送到 Azure Container Registry
 
+然后推送到 Azure 中国区的 Container Registry
+```
+az cloud set -n AzureChinaCloud
+az login
+az acr login --name snowpeak
+docker tag tomcat-hello:0.1 snowpeak.azurecr.cn/tomcat-hello:0.1
+docker push snowpeak.azurecr.cn/tomcat-hello:0.1
+docker tag tomcat-hello:0.1 snowpeak.azurecr.cn/tomcat-hello:latest
+docker push snowpeak.azurecr.cn/tomcat-hello:latest
+```
+
 ## 部署到 AKS
+
 
 ## 在 Azure DevOps Pipelines 中创建 CI 流水线
 
