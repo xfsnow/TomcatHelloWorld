@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tomcat-hello
+  template:
+    metadata:
+      labels:
+        app: tomcat-hello
+    spec:
+      containers:
+      - name: tomcat-hello
+        image: snowpeak.azurecr.cn/tomcat-hello
+        ports:
+        - containerPort: 80
