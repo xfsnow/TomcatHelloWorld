@@ -49,4 +49,13 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/TomcatHello.dockerfile'
         tags: |
-          $(tag) latest
+          $(tag) 
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        containerRegistry: '$(dockerRegistryServiceConnection)'
+        repository: '$(imageRepository)'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: |
+          latest          
