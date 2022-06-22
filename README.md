@@ -232,7 +232,7 @@ docker tag tomcat-hello:0.1 tomcat-hello:latest
 ```
 
 本地运行一下
-````
+```
 docker run -d -p 8080:8080 --name tomcat-hello tomcat-hello
 ```
 可以正常运行
