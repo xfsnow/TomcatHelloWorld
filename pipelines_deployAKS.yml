@@ -1,0 +1,29 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  kubernetesServiceEndpoint: AzureCn_nodeInstaller
+  azureContainerRegistry: snowpeak.azurecr.cn
+  azureResourceGroup: aksNodeInstaller
+  kubernetesCluster: NodeInstaller
+
+steps:
+- task: Kubernetes@1
+  displayName: kubectl apply
+  inputs:
+    connectionType: Kubernetes Service Connection
+    kubernetesServiceEndpoint: $(kubernetesServiceEndpoint)
+    azureResourceGroup: $(azureResourceGroup)
+    kubernetesCluster: $(kubernetesCluster)
+    command: apply
+    useConfigurationFile: true
+    configuration: tomcat-hello-deployment.yaml
+
