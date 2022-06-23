@@ -139,6 +139,9 @@
         <Valve className="org.apache.catalina.authenticator.SingleSignOn" />
         -->
 
+        <!-- Set this web app to run on root of the site. -->
+        <Context docBase="/usr/local/tomcat/webapps/hello" path="/" reloadable="true"/>
+
         <!-- Access log processes all example.
              Documentation at: /docs/config/valve.html
              Note: The pattern used is equivalent to using pattern="common" -->
