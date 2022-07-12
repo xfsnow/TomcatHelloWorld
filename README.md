@@ -296,6 +296,30 @@ pipelines_deployAKS.yml
 
 # TODO
 ## 配置到 App Servic的根目录运行
+不使用 Azure DevOps Pipeline，直接使用 az cli 先手动部署确认一下。
+https://docs.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=cli#deploy-warjarear-packages
+把构建出的 war 包改名为 ROOT.war，然后执行命令
+```bash
+az webapp deploy --resource-group CN3 --name tomcat-code --type war --src-path ./ROOT.war
+```
+然后去高级工具中看文件
+https://tomcat-code.scm.chinacloudsites.cn/wwwroot/
+发现
+Name  Size  Last Modified
+app.war 994,381 07/04/2022 08:39:10 +00:00
+hostingstart.html 65,527  07/04/2022 08:16:04 +00:00
+ROOT.war  994,381 07/04/2022 08:22:03 +00:00
+貌似是 Kudu 把我原来的 ROOT.war 改名为 app.war 然后运行的。
 
+再试另一个文件名
+```bash
+az webapp deploy --resource-group CN3 --name tomcat-code --type war --src-path ./hello.war
+```
+这次再试，发现不像前次 ROOT.war 那样保留着文件，只有一个 app.war 了。
+Name  Size  Last Modified
+app.war 994,381 07/04/2022 08:46:25 +00:00
+hostingstart.html 65,527  07/04/2022 08:16:04 +00:00
 
 ## 集成 Application Insights
+
+
