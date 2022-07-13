@@ -14,9 +14,9 @@ String hello = "Current time is " + dateTimeStr;
     </head>
 <body bgcolor="white">
 <body>
-<h2>Hello World from Java Spring in Tomcat!</h2>
+<h2>Hello World from Java in Tomcat!</h2>
 <p><%= hello %></p>
-<p>Please notice this time is set at the time of compilatin and not updated after refreshing the page.</p>
+<p>This is a classic Java Web project run in Tomcat. Please notice this time is set at the time of compilatin and not updated after refreshing the page.</p>
 <p><a href="/hello/hello">hello from Servlet</a></p>
 </body>
 </html>

@@ -1,10 +1,8 @@
 package mypackage;
 
-import java.net.InetAddress;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -37,7 +35,7 @@ public final class Hello extends HttpServlet {
             .append("<title>Sample Application Servlet</title>")
             .append("</head>")
             .append("<body bgcolor=\"white\">")
-            .append("<h1>Sample Application Servlet from Java Spring in Tomcat</h1>")
+            .append("<h1>Application Servlet from Java in Tomcat</h1>")
             .append("<P>You're visiting from IP ").append(clientIp)
             .append(". Current time is ").append(dateTimeStr)
             .append("<p>This application is running on ").append(inetadd.getHostName()).append(" with IP ")
