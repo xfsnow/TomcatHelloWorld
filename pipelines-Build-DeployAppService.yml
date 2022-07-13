@@ -35,6 +35,11 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
 
+   # 增加一个重命名的步骤，把打包制品文件名统一成 ROOT.war，以便后续部署到 App Service 的根目录。
+    - bash: |
+       echo $(System.DefaultWorkingDirectory)
+       mv $(System.DefaultWorkingDirectory)/target/*.war $(System.DefaultWorkingDirectory)/target/ROOT.war 
+
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
       inputs:
