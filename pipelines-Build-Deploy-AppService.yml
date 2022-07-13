@@ -12,10 +12,10 @@ variables:
   azureSubscription: '338a8b23-9963-4163-bef8-59fc5eb45a3f'
 
   # Web app name
-  webAppName: 'tomcat-code'
+  webAppName: 'tomcatcode'
 
   # Environment name
-  environmentName: 'tomcat-code'
+  environmentName: 'tomcatcode'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
